@@ -22,6 +22,8 @@ public class Chofer {
     private String rut;
     @NotBlank
     private String nombre;
+    @NotBlank
+    private boolean activo;
     @Column(updatable = false)
     private Date createdAt;
     private Date updatedAt;
@@ -63,6 +65,14 @@ public class Chofer {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public Date getCreatedAt() {

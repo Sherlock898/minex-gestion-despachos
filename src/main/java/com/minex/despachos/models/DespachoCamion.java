@@ -26,6 +26,9 @@ public class DespachoCamion {
     @ManyToOne
     private Chofer chofer;
 
+    @ManyToOne
+    private Usuario registradoPor;
+
     private LocalDate fechaDespacho;
 
     @Column(updatable = false)

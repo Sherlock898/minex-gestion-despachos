@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Camion {
@@ -16,6 +17,8 @@ public class Camion {
     private String patente;
     private String modelo;
     private String color;
+    @NotBlank
+    private boolean activo;
 
     @OneToMany(mappedBy = "camion")
     private List<DespachoCamion> despachoCamiones;
@@ -58,6 +61,14 @@ public class Camion {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public Date getCreatedAt() {

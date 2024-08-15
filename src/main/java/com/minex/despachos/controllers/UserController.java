@@ -1,10 +1,9 @@
 package com.minex.despachos.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.minex.despachos.models.Usuario;
 import com.minex.despachos.services.UsuarioService;
@@ -17,11 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
 //TODO: Anyadir interceptor para verificar que el usuario esté logeado
-@RestController
-@RequestMapping("/api/usuarios")
+@Controller
 @Validated
 public class UserController {
     private final UsuarioService usuarioService;
@@ -30,80 +26,122 @@ public class UserController {
         this.usuarioService = usuarioService;
     }
 
+    @GetMapping("/")
+    public String index(HttpSession session) {
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        if (usuarioId == null) {
+            return "redirect:/login";
+        }
+        Usuario usuario = usuarioService.getById(usuarioId);
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        return "Index.jsp";
+    }
+
     // Funciones de registro y login
     @GetMapping("/login")
     public String mostrarLogin(@ModelAttribute("usuario") Usuario _u, HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if(usuario != null){
-            return "redirect:/main";
+        Long usuarioId = (Long) session.getAttribute("usuario");
+        if (usuarioId != null) {
+            Usuario usuario = usuarioService.getById(usuarioId);
+            if (usuario != null) {
+                return "redirect:/";
+            }
+            return "redirect:/";
         }
-        return "login.jsp";
+
+        return "/Usuario/Login.jsp";
     }
 
     @PostMapping("/login")
-    public String validarLogin(@ModelAttribute("usuario") Usuario usuario,
-    @RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession session) {
+    public String validarLogin(@ModelAttribute("usuario") Usuario _usuario,
+            @RequestParam("email") String email, @RequestParam("password") String password, Model model,
+            HttpSession session) {
         boolean isAutenticado = usuarioService.autenticarUsuario(email, password);
-        if(isAutenticado){
-            session.setAttribute("usuario", usuario);
-            return "redirect:/main";
-        }
-        else{
+        if (isAutenticado) {
+            Usuario usuario = usuarioService.getByEmail(email);
+            session.setAttribute("usuarioId", usuario.getId());
+            return "redirect:/";
+        } else {
             model.addAttribute("error", "Usuario o contraseña incorrectos");
-            return "login.jsp";
+            return "/Usuario/Login.jsp";
         }
     }
 
     @GetMapping("/registro")
     public String mostrarRegistro(@ModelAttribute("usuario") Usuario _u, HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if(usuario == null){
-            return "redirect:/main";
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        if (usuarioId != null) {
+            return "redirect:/";
         }
-        else if(usuario.getRol() != Usuario.Rol.ADMIN){
-            return "redirect:/main";
+        Usuario usuario = usuarioService.getById(usuarioId);
+        if (usuario == null) {
+            return "redirect:/";
+        } else if (usuario.getRol() != Usuario.Rol.ADMIN) {
+            return "redirect:/";
         }
-        return "registro.jsp";
+        return "/Usuario/Registro.jsp";
     }
 
     @PostMapping("/registro")
-    public String registrarUsuario(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult result, Model model, HttpSession session) {
-        Usuario usuarioSesion = (Usuario) session.getAttribute("usuario");
-        if(usuarioSesion == null){
-            return "redirect:/main";
+    public String registrarUsuario(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult result, Model model,
+            HttpSession session) {
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        if (usuarioId != null) {
+            return "redirect:/";
         }
-        else if(usuarioSesion.getRol() != Usuario.Rol.ADMIN){
-            return "redirect:/main";
+        Usuario usuarioSesion = usuarioService.getById(usuarioId);
+        if (usuarioSesion == null) {
+            return "redirect:/";
+        } else if (usuarioSesion.getRol() != Usuario.Rol.ADMIN) {
+            return "redirect:/";
         }
         Usuario emailRegistrado = usuarioService.getByEmail(usuario.getEmail());
-        if(emailRegistrado != null){
+        if (emailRegistrado != null) {
             result.rejectValue("email", "unique", "Este email ya está registrado");
         }
         Usuario rutRegistrado = usuarioService.getByRut(usuario.getRut());
-        if(rutRegistrado != null){
+        if (rutRegistrado != null) {
             result.rejectValue("rut", "unique", "Este rut ya está registrado");
         }
-        if(!usuario.getPassword().equals(usuario.getPasswordConfirm())){
+        if (!usuario.getPassword().equals(usuario.getPasswordConfirm())) {
             result.rejectValue("passwordConfirm", "match", "Las contraseñas no coinciden");
         }
-        
-        if(result.hasErrors()){
-            return "registro.jsp";
+
+        if (result.hasErrors()) {
+            return "/Usuario/Registro.jsp";
         }
         Usuario usuarioRegistradoExitoso = usuarioService.registrar(usuario);
-        if(usuarioRegistradoExitoso == null){
+        if (usuarioRegistradoExitoso == null) {
             model.addAttribute("error", "Error, no se pudo registrar el usuario");
-            return "registro.jsp";
+            return "/Usuario/Registro.jsp";
         }
         usuarioService.registrar(usuario);
-        return "registro.jsp";
-    }    
-
+        return "/Usuario/Registro.jsp";
+    }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";
+    }
+
+    // Admin page
+    @GetMapping("/admin")
+    public String adminPage(HttpSession session) {
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        if (usuarioId == null) {
+            return "redirect:/login";
+        }
+        Usuario usuario = usuarioService.getById(usuarioId);
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        if (usuario.getRol() != Usuario.Rol.ADMIN) {
+            return "redirect:/";
+        }
+        return "/Usuario/Admin.jsp";
     }
 
 }

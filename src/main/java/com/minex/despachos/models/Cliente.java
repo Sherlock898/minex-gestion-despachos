@@ -22,6 +22,12 @@ public class Cliente {
     private String rut;
     @NotBlank
     private String razonSocial;
+    @NotBlank
+    private String direccionActual;
+    @NotBlank
+    private String comunaActual;
+    @NotBlank
+    private String ciudadActual;
 
     @OneToMany(mappedBy = "cliente")
     private List<Despacho> despachos;
@@ -72,6 +78,30 @@ public class Cliente {
 
     public void setDespachos(List<Despacho> despachos) {
         this.despachos = despachos;
+    }
+
+    public String getDireccionActual() {
+        return direccionActual;
+    }
+
+    public void setDireccionActual(String direccionActual) {
+        this.direccionActual = direccionActual;
+    }
+
+    public String getComunaActual() {
+        return comunaActual;
+    }
+
+    public void setComunaActual(String comunaActual) {
+        this.comunaActual = comunaActual;
+    }
+
+    public String getCiudadActual() {
+        return ciudadActual;
+    }
+
+    public void setCiudadActual(String ciudadActual) {
+        this.ciudadActual = ciudadActual;
     }
 
     public Date getCreatedAt() {

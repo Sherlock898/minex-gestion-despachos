@@ -16,20 +16,22 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 public class Despacho {
     public enum UnidadDeMedida {
-        CENTIMETROS_CUBICOS, TONELADAS
+        METROS_CUBICOS, CENTIMETROS_CUBICOS, TONELADAS
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
-    private String calle;
+    private Long numero;
     @NotBlank
-    private String numero;
+    private String direccion;
     @NotBlank
     private String comuna;
     @NotBlank
-    private String producto;
+    private String ciudad;
+    @NotBlank
+    private String descripcionProducto;
     @NotBlank
     private Long cantidad;
     @NotBlank
@@ -37,7 +39,9 @@ public class Despacho {
     @NotBlank
     private Long precioUnitario;
     @NotBlank
-    private Long precioTotal;
+    private Long precioNeto;
+    @NotBlank
+    private Long impuestoAdicional;
 
     @ManyToOne
     private Productor productor;
@@ -63,7 +67,7 @@ public class Despacho {
     }
 
     public Despacho(){}
-    
+
     public Long getId() {
         return id;
     }
@@ -71,21 +75,21 @@ public class Despacho {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public String getNumero() {
+    
+    public Long getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(Long numero) {
         this.numero = numero;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getComuna() {
@@ -96,12 +100,20 @@ public class Despacho {
         this.comuna = comuna;
     }
 
-    public String getProducto() {
-        return producto;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setProducto(String producto) {
-        this.producto = producto;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getDescripcionProducto() {
+        return descripcionProducto;
+    }
+
+    public void setDescripcionProducto(String descripcionProducto) {
+        this.descripcionProducto = descripcionProducto;
     }
 
     public Long getCantidad() {
@@ -128,12 +140,20 @@ public class Despacho {
         this.precioUnitario = precioUnitario;
     }
 
-    public Long getPrecioTotal() {
-        return precioTotal;
+    public Long getPrecioNeto() {
+        return precioNeto;
     }
 
-    public void setPrecioTotal(Long precioTotal) {
-        this.precioTotal = precioTotal;
+    public void setPrecioNeto(Long precioNeto) {
+        this.precioNeto = precioNeto;
+    }
+
+    public Long getImpuestoAdicional() {
+        return impuestoAdicional;
+    }
+
+    public void setImpuestoAdicional(Long impuestoAdicional) {
+        this.impuestoAdicional = impuestoAdicional;
     }
 
     public Productor getProductor() {
@@ -164,15 +184,8 @@ public class Despacho {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

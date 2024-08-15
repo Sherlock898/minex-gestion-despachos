@@ -22,6 +22,12 @@ public class Productor {
     private String rut;
     @NotBlank
     private String razonSocial;
+    @NotBlank
+    private String direccionActual;
+    @NotBlank
+    private String comunaActual;
+    @NotBlank
+    private String ciudadActual;
 
     @OneToMany(mappedBy = "productor")
     private List<Despacho> despachos;
@@ -72,6 +78,22 @@ public class Productor {
 
     public void setDespachos(List<Despacho> despachos) {
         this.despachos = despachos;
+    }
+
+    public String getDireccionActual() {
+        return direccionActual;
+    }
+
+    public void setDireccionActual(String direccionActual) {
+        this.direccionActual = direccionActual;
+    }
+
+    public String getComunaActual() {
+        return comunaActual;
+    }
+
+    public void setComunaActual(String comunaActual) {
+        this.comunaActual = comunaActual;
     }
 
     public Date getCreatedAt() {

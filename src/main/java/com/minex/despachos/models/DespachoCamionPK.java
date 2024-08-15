@@ -9,8 +9,10 @@ import jakarta.persistence.Embeddable;
 public class DespachoCamionPK implements Serializable{
     @Column(name = "id_despacho")
     private Long idDespacho;
-    @Column(name = "patente_camion")
-    private String patenteCamion;
+    @Column(name = "id_camion")
+    private Long idCamion;
+    @Column(name = "id_chofer")
+    private Long idChofer;
 
     public DespachoCamionPK(){}
 
@@ -22,11 +24,19 @@ public class DespachoCamionPK implements Serializable{
         this.idDespacho = idDespacho;
     }
 
-    public String getPatenteCamion() {
-        return patenteCamion;
+    public Long getIdCamion() {
+        return idCamion;
     }
 
-    public void setPstenteCamion(String patenteCamion) {
-        this.patenteCamion = patenteCamion;
+    public void setIdCamion(Long idCamion) {
+        this.idCamion = idCamion;
+    }
+
+    public Long getIdChofer() {
+        return idChofer;
+    }
+
+    public void setIdChofer(Long idChofer) {
+        this.idChofer = idChofer;
     }
 }

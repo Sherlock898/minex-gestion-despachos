@@ -46,4 +46,8 @@ public class UsuarioService {
     public Usuario getByRut(String rut){
         return usuarioRepository.findByRut(rut);
     }
+
+    public Usuario getById(Long usuarioId) {
+        return usuarioRepository.findById(usuarioId).orElse(null);
+    }
 }

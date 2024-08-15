@@ -20,16 +20,19 @@ public class DespachoCamion {
     private Despacho despacho;
 
     @ManyToOne
-    @MapsId("patenteCamion")
+    @MapsId("idCamion")
     private Camion camion;
 
     @ManyToOne
+    @MapsId("idChofer")
     private Chofer chofer;
 
     @ManyToOne
     private Usuario registradoPor;
 
     private LocalDate fechaDespacho;
+
+    private boolean recibido;
 
     @Column(updatable = false)
     private Date createdAt;
@@ -67,6 +70,14 @@ public class DespachoCamion {
 
     public void setFechaDespacho(LocalDate fechaDespacho) {
         this.fechaDespacho = fechaDespacho;
+    }
+
+    public boolean isRecibido() {
+        return recibido;
+    }
+
+    public void setRecibido(boolean recibido) {
+        this.recibido = recibido;
     }
 
     public Date getCreatedAt() {

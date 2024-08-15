@@ -35,7 +35,7 @@ public class Usuario {
     private String nombre;
     @NotBlank
     private String rut;
-    @NotBlank
+    @NotNull
     private Rol rol;
     
     @OneToMany(mappedBy = "registradoPor")

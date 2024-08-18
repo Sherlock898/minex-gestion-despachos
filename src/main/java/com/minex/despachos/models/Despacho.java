@@ -12,17 +12,18 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Despacho {
     public enum UnidadDeMedida {
-        METROS_CUBICOS, CENTIMETROS_CUBICOS, TONELADAS
+        M3, CM3, TON
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotNull
     private Long numero;
     @NotBlank
     private String direccion;
@@ -32,20 +33,22 @@ public class Despacho {
     private String ciudad;
     @NotBlank
     private String descripcionProducto;
-    @NotBlank
+    @NotNull
     private Long cantidad;
-    @NotBlank
+    @NotNull
     private UnidadDeMedida unidadDeMedida;
-    @NotBlank
+    @NotNull
     private Long precioUnitario;
-    @NotBlank
+    @NotNull
     private Long precioNeto;
-    @NotBlank
+    @NotNull
     private Long impuestoAdicional;
 
+    @NotNull
     @ManyToOne
     private Productor productor;
 
+    @NotNull
     @ManyToOne
     private Cliente cliente;
 

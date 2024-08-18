@@ -13,5 +13,7 @@ public interface DespachoRepository extends CrudRepository<Despacho, Long> {
     List<Despacho> findByClienteId(Long idCliente);
 
     List<Despacho> findByProductorId(Long idProductor);
+
+    List<Despacho> findByDespachoCamionIsNull();
     
 }

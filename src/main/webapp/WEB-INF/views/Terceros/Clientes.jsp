@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camiones</title>
+    <title>Clientes</title>
     <!-- Boostrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<!-- Estilos sydebar -->
@@ -97,7 +97,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/camiones" class="nav-link text-white d-flex align-items-center active" aria-current="page">
+				<a href="/camiones" class="nav-link text-white d-flex align-items-center">
 					<svg class="pe-none me-2" width="16" height="16" stroke="#ffffff" fill="none">
 						<use xlink:href="#truck"></use>
 					</svg>
@@ -105,7 +105,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/clientes" class="nav-link text-white d-flex align-items-center">
+				<a href="/clientes" class="nav-link text-white d-flex align-items-center active" aria-current="page">
 					<svg class="bi pe-none me-2" width="16" height="16">
 						<use xlink:href="#people-circle"></use>
 					</svg>
@@ -122,46 +122,47 @@
 	
 	<main class="col-md-9 ms-sm-auto col-lg-10">
 		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-			<h1 class="h2">Camiones</h1>
+			<h1 class="h2">Clientes</h1>
 			<div class="btn-toolbar mb-2 mb-md-0">
 				<div class="btn-group me-2">
 					<button id="copyClipboard" type="button" class="btn btn-sm btn-outline-secondary">Copiar Json</button>
 					<button id="exportExcel" type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
 				</div>
 				<c:if test="${usuario.rol == 'ADMIN'}">
-					<button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href = '/camiones/add'">Agregar</button>
+					<button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href = '/clientes/add'">Agregar</button>
 				</c:if>
 			</div>	
 		</div>
 	<div class="table-responsive small">
-		<table id="camionesData" class="table table-striped table-sm">
+		<table id="clientesData" class="table table-striped table-sm">
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Patente</th>
-					<th>Color</th>
-					<th>Modelo</th>
-					<th>Activo</th>
-					${usuario.rol == 'ADMIN' ? "<th>Acciones</th>" : ""}
+					<th>Rut</th>
+					<th>Razón Social</th>
+					<th>Ciudad</th>
+					<th>Comuna</th>
+                    <th>Dirección</th>
+                    ${usuario.rol == 'ADMIN' ? '<th>Acciones</th>' : ''}
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="camion" items="${camiones}">
+				<c:forEach var="cliente" items="${clientes}">
 					<tr>
-						<th>${camion.id}</th>
-						<td>${camion.patente}</td>
-						<td>${camion.color}</td>
-						<td>${camion.modelo}</td>
-						<td>${camion.activo ? "Si" : "No"}</td>
+						<th>${cliente.id}</th>
+						<td>${cliente.rut}</td>
+						<td>${cliente.razonSocial}</td>
+						<td>${cliente.ciudadActual}</td>
+						<td>${cliente.comunaActual}</td>
+						<td>${cliente.direccionActual}</td>
+
 						<c:if test="${usuario.rol == 'ADMIN'}">
 							<td>
 								<button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
-								<form class="d-inline p-0 m-0 border-0" method="POST" action="/camiones/${camion.id}/cambiar-estado">
-									<button id="cambiar-estado-button" type="submit" class="btn btn-sm btn-outline-success">Cambiar estado</button>
-								</form>
 								<button type="button" class="btn btn-sm btn-outline-danger">Eliminar</button>
 							</td>
 						</c:if>
+                        
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -192,8 +193,7 @@
 <script src="js/dataTableConfig.js"></script>
 <script>
 	// Inicializa la tabla de camiones
-	initializeDataTable('camionesData', 'copyClipboard', 'exportExcel', 5);
-
+	initializeDataTable('clientesData', 'copyClipboard', 'exportExcel', 6);
 </script>
 </body>
 </html>

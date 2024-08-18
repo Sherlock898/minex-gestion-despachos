@@ -4,27 +4,26 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class DespachoCamion {
-    @EmbeddedId
-    private DespachoCamionPK id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne
-    @MapsId("idDespacho")
     private Despacho despacho;
 
     @ManyToOne
-    @MapsId("idCamion")
     private Camion camion;
 
     @ManyToOne
-    @MapsId("idChofer")
     private Chofer chofer;
 
     @ManyToOne

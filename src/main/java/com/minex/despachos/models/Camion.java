@@ -22,8 +22,7 @@ public class Camion {
     private String patente;
     private String modelo;
     private String color;
-    @NotBlank
-    private boolean activo;
+    private boolean activo = true;
 
     @OneToMany(mappedBy = "camion")
     private List<DespachoCamion> despachoCamiones;

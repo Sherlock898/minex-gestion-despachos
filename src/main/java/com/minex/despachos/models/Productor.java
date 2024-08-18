@@ -96,6 +96,14 @@ public class Productor {
         this.comunaActual = comunaActual;
     }
 
+    public String getCiudadActual() {
+        return ciudadActual;
+    }
+
+    public void setCiudadActual(String ciudadActual) {
+        this.ciudadActual = ciudadActual;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }

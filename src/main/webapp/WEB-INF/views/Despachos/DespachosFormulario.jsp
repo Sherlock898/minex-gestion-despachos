@@ -7,13 +7,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camiones</title>
+    <title>Agregar despacho</title>
     <!-- Boostrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<!-- Estilos sydebar -->
 	<link rel="stylesheet" href="/css/sidebars.css">
-	<!-- Estilos preloader -->
-	<link rel="stylesheet" href="/css/preloader.css">
+
 </head>
 <body>
 	<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -48,9 +47,6 @@
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 7V17C3.5 18.1046 4.39543 19 5.5 19H19.5C20.6046 19 21.5 18.1046 21.5 17V7C21.5 5.89543 20.6046 5 19.5 5H5.5C4.39543 5 3.5 5.89543 3.5 7Z" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M15.5 10H18.5" stroke="" stroke-width="1.5" stroke-linecap="round"/> <path d="M15.5 13H18.5" stroke="" stroke-width="1.5" stroke-linecap="round"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5 10C11.5 11.1046 10.6046 12 9.5 12C8.39543 12 7.5 11.1046 7.5 10C7.5 8.89543 8.39543 8 9.5 8C10.0304 8 10.5391 8.21071 10.9142 8.58579C11.2893 8.96086 11.5 9.46957 11.5 10Z" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M5.5 16C8.283 12.863 11.552 13.849 13.5 16" stroke="" stroke-width="1.5" stroke-linecap="round"/>
 		</symbol>
 	</svg>
-	<div id="preloader">
-		<div></div>
-	</div>
 	
 	<div class="container-fluid">
 	<div class="row">
@@ -73,7 +69,7 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="/despachos" class="nav-link text-white d-flex align-items-center">
+				<a href="/despachos" class="nav-link text-white d-flex align-items-center active" aria-current="page">
 					<svg class="bi pe-none me-2" width="16" height="16">
 						<use xlink:href="#table"></use>
 					</svg>
@@ -97,7 +93,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/camiones" class="nav-link text-white d-flex align-items-center active" aria-current="page">
+				<a href="/camiones" class="nav-link text-white d-flex align-items-center">
 					<svg class="pe-none me-2" width="16" height="16" stroke="#ffffff" fill="none">
 						<use xlink:href="#truck"></use>
 					</svg>
@@ -120,80 +116,143 @@
 		</div>	
 	</div>
 	
-	<main class="col-md-9 ms-sm-auto col-lg-10">
+	<main class="col-md-9 ms-sm-auto col-lg-10 align-items-center">
 		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-			<h1 class="h2">Camiones</h1>
-			<div class="btn-toolbar mb-2 mb-md-0">
-				<div class="btn-group me-2">
-					<button id="copyClipboard" type="button" class="btn btn-sm btn-outline-secondary">Copiar Json</button>
-					<button id="exportExcel" type="button" class="btn btn-sm btn-outline-secondary">Exportar</button>
-				</div>
-				<c:if test="${usuario.rol == 'ADMIN'}">
-					<button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href = '/camiones/add'">Agregar</button>
-				</c:if>
-			</div>	
+			<h1 class="h2 mb-3">Añadir despacho</h1>
+
 		</div>
-	<div class="table-responsive small">
-		<table id="camionesData" class="table table-striped table-sm">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Patente</th>
-					<th>Color</th>
-					<th>Modelo</th>
-					<th>Activo</th>
-					${usuario.rol == 'ADMIN' ? "<th>Acciones</th>" : ""}
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="camion" items="${camiones}">
-					<tr>
-						<th>${camion.id}</th>
-						<td>${camion.patente}</td>
-						<td>${camion.color}</td>
-						<td>${camion.modelo}</td>
-						<td>${camion.activo ? "Si" : "No"}</td>
-						<c:if test="${usuario.rol == 'ADMIN'}">
-							<td>
-								<button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
-								<form class="d-inline p-0 m-0 border-0" method="POST" action="/camiones/${camion.id}/cambiar-estado">
-									<button id="cambiar-estado-button" type="submit" class="btn btn-sm btn-outline-success">Cambiar estado</button>
-								</form>
-								<button type="button" class="btn btn-sm btn-outline-danger">Eliminar</button>
-							</td>
-						</c:if>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
+
+		<div class="d-flex justify-content-center align-items-center">
+			<form:form class="col-lg-9 col-sm-12 col-md-12 center-block" method="POST" action="/despachos/add" modelAttribute="despacho">
+				<div class="row">
+					<div class="col-2">
+						<div class="form-floating mb-3">
+							<form:input type="number" path="numero" class="form-control" id="numero" name="numero" placeholder="numero"/>
+							<form:label path="numero" for="numero">Número</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="numero"/>
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:input path="descripcionProducto" class="form-control" id="descripcion" name="descripcionProducto" placeholder="descripcionProducto"/>
+							<form:label path="descripcionProducto" for="descripcionProducto">Descripción</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="descripcionProducto"/>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:select path="cliente" class="form-control" id="cliente" name="cliente" placeholder="cliente">
+								<form:option value="" label="Seleccione"/>
+								<c:forEach var="cliente" items="${clientes}">
+									<form:option value="${cliente.id}" label="${cliente.razonSocial}"/>
+								</c:forEach>
+							</form:select>
+							<form:label path="cliente" for="cliente">Cliente</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="cliente"/>
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:select path="productor" class="form-control" id="productor" name="productor" placeholder="productor">
+								<form:option value="" label="Seleccione"/>
+								<c:forEach var="productor" items="${productores}">
+									<form:option value="${productor.id}" label="${productor.razonSocial}"/>
+								</c:forEach>
+							</form:select>
+							<form:label path="productor" for="productor">Productor</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="productor"/>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <form:input path="ciudad" class="form-control" id="ciudad" name="ciudad" placeholder="ciudad"/>
+                            <form:label path="ciudad" for="ciudad">Ciudad</form:label>
+                            <form:errors class="text text-danger fw-bold m-2" path="ciudad"/>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <form:input path="comuna" class="form-control" id="comuna" name="comuna" placeholder="comuna"/>
+                            <form:label path="comuna" for="comuna">Comuna</form:label>
+                            <form:errors class="text text-danger fw-bold m-2" path="comuna"/>
+                        </div>
+                    </div>
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:input path="direccion" class="form-control" id="floatingInput" name="direccion" placeholder="direccion"/>
+							<form:label path="direccion" for="floatingInput">Dirección</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="direccion"/>
+						</div>
+					</div>
+                </div>
+
+
+	
+				<div class="row">
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:input path="cantidad" type="number" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad"/>
+							<form:label path="cantidad" for="cantidad">Cantidad</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="cantidad"/>
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="col form-floating">
+							
+							<form:select path="unidadDeMedida" class="form-control" id="unidadMedida" name="unidadMedida" placeholder="hd">
+								<form:option value="" label="Seleccione"/>
+								<c:forEach var="unidad" items="${unidades}">
+									<form:option value="${unidad}" label="${unidad}"/>
+								</c:forEach>
+							</form:select>
+							<form:label path="unidadDeMedida" for="unidadMedida">Unidad</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="unidadDeMedida"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:input type="number" path="precioUnitario" id="precioNeto" class="form-control" name="precioUnitario" placeholder="precioUnitario"/>
+							<form:label path="precioUnitario" for="precioUnitario">Precio unitario</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="precioUnitario"/>
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:input type="number" path="precioNeto" id="precioNeto" class="form-control" name="precioNeto" placeholder="precioNeto"/>
+							<form:label path="precioNeto" for="precioNeto">Precio total</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="precioNeto"/>
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:input type="number" path="impuestoAdicional" id="impuestoAdicional" class="form-control" name="impuestoAdicional" placeholder="impuestoAdicional"/>
+							<form:label path="impuestoAdicional" for="impuestoAdicional">Impuesto adicional</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="impuestoAdicional"/>
+						</div>
+					</div>
+				</div>
+
+
+
+
+				<button class="w-100 btn btn-outline-primary btn-lg" type="submit">Añadir</button>
+
+			</form:form>
+		</div>
+
 	</main>
 </div>
 </div>
 
 <!-- Boostrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="/js/dataTableConfig.js"></script>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-
-<!-- DataTables Buttons JS -->
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-
-<!-- JSZip for Excel export -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-<!-- Buttons HTML5 export -->
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-
-<script src="js/dataTableConfig.js"></script>
-<script>
-	// Inicializa la tabla de camiones
-	initializeDataTable('camionesData', 'copyClipboard', 'exportExcel', 5);
-
-</script>
-</body>
 </html>

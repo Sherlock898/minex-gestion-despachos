@@ -12,18 +12,18 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class Chofer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @Pattern(regexp = "^[0-9]{7,8}-[0-9Kk]$", message = "Rut inválido")
     private String rut;
     @NotBlank
     private String nombre;
-    @NotBlank
-    private boolean activo;
+    private boolean activo = true;
     @Column(updatable = false)
     private Date createdAt;
     private Date updatedAt;

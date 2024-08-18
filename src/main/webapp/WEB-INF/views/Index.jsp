@@ -22,10 +22,11 @@
                     <h1>Minex</h1>
                 </div>
             </div>
-            <p>Ayuda no se diseñar</p>
+            <p>Bienvenido ${usuario.nombre}</p>
             <p>
+                <a class="btn btn-success btn-lg" href="/despachos" role="button">Ver data</a>
                 <a class="btn btn-primary btn-lg" href="/admin" role="button">Acceso admin</a>
-                <a class="btn btn-success btn-lg" href="/reports" role="button">Ver data</a>
+                <a class="btn btn-danger btn-lg" href="/logout" role="button">Cerrar sesión</a>
             </p>
         </div>
     </div>

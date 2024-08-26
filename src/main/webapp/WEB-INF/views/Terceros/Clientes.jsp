@@ -157,7 +157,6 @@
 						<c:if test="${usuario.rol == 'ADMIN'}">
 							<td>
 								<button type="button" class="btn btn-sm btn-outline-primary" onclick="location.href = '/clientes/${cliente.id}/edit'">Editar</button>
-								<button type="button" class="btn btn-sm btn-outline-danger" onclick="alert('No es posible, contactar a un administrador')">Eliminar</button>
 							</td>
 						</c:if>
                         

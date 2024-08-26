@@ -35,10 +35,6 @@ public class DespachoService {
         return despachoRepository.findByClienteId(idCliente);
     }
 
-    public List<Despacho> getByProductor(Long idProductor){
-        return despachoRepository.findByProductorId(idProductor);
-    }
-
     public List<Despacho> getNoAsignados(){
         return despachoRepository.findByDespachoCamionIsNull();
     }

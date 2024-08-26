@@ -7,11 +7,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar productor</title>
+    <title>Agregar Despacho</title>
     <!-- Boostrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<!-- Estilos sydebar -->
 	<link rel="stylesheet" href="/css/sidebars.css">
+
 </head>
 <body>
 	<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -128,11 +129,27 @@
                         <form:select path="despacho" class="form-select" id="despacho" name="despacho">
                             <c:forEach var="despacho" items="${despachos}">
                                 <option value="${despacho.id}">${despacho.numero}</option>
+                                <option value="${despacho.id}">${despacho.numero}</option>
+
+                                <option value="${despacho.id}">${despacho.numero}</option>
+
                             </c:forEach>
                         </form:select>
                         <form:label path="despacho" for="despacho">Número guía de despacho</form:label>
                         <form:errors class="text text-danger fw-bold m-2" path="despacho"/>
                     </div>
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:select path="productor" class="form-control" id="productor" name="productor" placeholder="productor">
+								<form:option value="" label="Seleccione"/>
+								<c:forEach var="productor" items="${productores}">
+									<form:option value="${productor.id}" label="${productor.razonSocial}"/>
+								</c:forEach>
+							</form:select>
+							<form:label path="productor" for="productor">Productor</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="productor"/>
+						</div>
+					</div>
                     <div class="form-floating mb-3">
                         <form:select path="camion" class="form-select" id="camion" name="camion">
                             <c:forEach var="camion" items="${camiones}">
@@ -176,7 +193,7 @@
                     </div>
                 </form>
             </div>
-        </c:if>
+        </c:if>	
         <c:if test="${empty despachos}">
             <div class="alert alert-success" role="alert">
                 Todos los despachos han sido asignados
@@ -188,5 +205,11 @@
 
 <!-- Boostrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="/js/dataTableConfig.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#despacho').select2();
+	});
+</script>
 </html>

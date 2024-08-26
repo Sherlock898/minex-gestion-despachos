@@ -70,6 +70,8 @@ public class TercerosController {
         if(usuarioId == null) return "redirect:/login";
         Usuario usuario = usuarioService.getById(usuarioId);
         if(usuario == null) return "redirect:/login";
+        // Checkear si la patente ya está registrada
+        if(camionService.existsByPatente(camion.getPatente())) result.rejectValue("patente", "error.camion", "La patente ya está registrada");
         if(result.hasErrors()){
             return "/Terceros/CamionesFormulario.jsp";
         }
@@ -152,6 +154,7 @@ public class TercerosController {
         if(usuarioId == null) return "redirect:/login";
         Usuario usuario = usuarioService.getById(usuarioId);
         if(usuario == null) return "redirect:/login";
+        // Checkear si el rut ya está registrado
         if(choferService.existsByRut(chofer.getRut())) {
             result.rejectValue("rut", "error.chofer", "El rut ya está registrado");
         }
@@ -239,6 +242,8 @@ public class TercerosController {
         Usuario usuario = usuarioService.getById(usuarioId);
         if(usuario == null) return "redirect:/login";
         if(usuario.getRol() != Usuario.Rol.ADMIN) return "redirect:/";
+        // Checkear si el rut ya está registrado
+        if(productorService.existsByRut(productor.getRut())) result.rejectValue("rut", "error.productor", "El rut ya está registrado");
         if(result.hasErrors()) return "/Terceros/ProductoresFormulario.jsp";
         productorService.save(productor);
         return "redirect:/productores";

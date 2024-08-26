@@ -8,5 +8,16 @@ services:
     ports:
       - '5432:5432'
 
-  dispatchs:
-    
+  # dispatchs:
+  #   depends_on:
+  #     - postgres
+  #   build:
+  #     context: .
+  #   environment:
+  #     - 'DATABASE_URL=jdbc:postgresql://postgres:5432/dispatchs'
+  #     - 'DATABASE_HOST=postgres'
+  #     - 'DATABASE_PORT=5432'
+  #     - 'DATABASE_USER=admin'
+  #     - 'DATABASE_PASSWORD=admin'
+  #   ports:
+  #     - '8080:8080'

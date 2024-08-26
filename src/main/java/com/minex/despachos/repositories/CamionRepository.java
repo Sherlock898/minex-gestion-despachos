@@ -11,5 +11,7 @@ import com.minex.despachos.models.Camion;
 public interface CamionRepository extends CrudRepository<Camion, Long> {
 
     List<Camion> findByActivoTrue();
+
+    boolean existsByPatente(String patente);
     
 }

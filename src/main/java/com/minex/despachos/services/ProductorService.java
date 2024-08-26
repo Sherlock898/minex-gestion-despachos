@@ -30,4 +30,8 @@ public class ProductorService {
     public List<Productor> getAll() {
         return (List<Productor>) productorRepository.findAll();
     }
+
+    public boolean existsByRut(String rut) {
+        return productorRepository.existsByRut(rut);
+    }
 }

@@ -35,7 +35,7 @@ public class Productor {
     private String email;
 
     @OneToMany(mappedBy = "productor")
-    private List<Despacho> despachos;
+    private List<DespachoCamion> despachoCamiones;
 
     @Column(updatable = false)
     private Date createdAt;
@@ -77,12 +77,12 @@ public class Productor {
         this.razonSocial = razonSocial;
     }
 
-    public List<Despacho> getDespachos() {
-        return despachos;
+    public List<DespachoCamion> getDespachos() {
+        return despachoCamiones;
     }
 
-    public void setDespachos(List<Despacho> despachos) {
-        this.despachos = despachos;
+    public void setDespachos(List<DespachoCamion> despachoCamiones) {
+        this.despachoCamiones = despachoCamiones;
     }
 
     public String getDireccionActual() {

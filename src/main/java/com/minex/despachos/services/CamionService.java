@@ -33,5 +33,9 @@ public class CamionService {
 
     public List<Camion> getActivos() {
         return camionRepository.findByActivoTrue();
+    }
+
+    public boolean existsByPatente(String patente) {
+        return camionRepository.existsByPatente(patente);
     }    
 }

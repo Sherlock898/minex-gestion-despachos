@@ -153,18 +153,6 @@
 							<form:errors class="text text-danger fw-bold m-2" path="cliente"/>
 						</div>
 					</div>
-					<div class="col">
-						<div class="form-floating mb-3">
-							<form:select path="productor" class="form-control" id="productor" name="productor" placeholder="productor">
-								<form:option value="" label="Seleccione"/>
-								<c:forEach var="productor" items="${productores}">
-									<form:option value="${productor.id}" label="${productor.razonSocial}"/>
-								</c:forEach>
-							</form:select>
-							<form:label path="productor" for="productor">Productor</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="productor"/>
-						</div>
-					</div>
 				</div>
                 <div class="row">
                     <div class="col-3">
@@ -237,10 +225,14 @@
 							<form:errors class="text text-danger fw-bold m-2" path="impuestoAdicional"/>
 						</div>
 					</div>
+					<div class="col">
+						<div class="form-floating mb-3">
+							<form:input type="number" path="precioTotal" id="precioTotal" class="form-control" name="precioTotal" placeholder="impuestoAdicional"/>
+							<form:label path="precioTotal" for="precioTotal">Precio total</form:label>
+							<form:errors class="text text-danger fw-bold m-2" path="precioTotal"/>
+						</div>
+					</div>
 				</div>
-
-
-
 
 				<button class="w-100 btn btn-outline-primary btn-lg" type="submit">Añadir</button>
 

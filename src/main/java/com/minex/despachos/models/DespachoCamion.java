@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class DespachoCamion {
@@ -17,15 +18,23 @@ public class DespachoCamion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @OneToOne
     private Despacho despacho;
 
+    @NotNull
     @ManyToOne
     private Camion camion;
 
+    @NotNull
     @ManyToOne
     private Chofer chofer;
 
+    @NotNull
+    @ManyToOne
+    private Productor productor;
+
+    @NotNull
     @ManyToOne
     private Usuario registradoPor;
 
@@ -61,6 +70,22 @@ public class DespachoCamion {
 
     public void setChofer(Chofer chofer) {
         this.chofer = chofer;
+    }
+
+    public Productor getProductor() {
+        return productor;
+    }
+
+    public void setProductor(Productor productor) {
+        this.productor = productor;
+    }
+
+    public Usuario getRegistradoPor() {
+        return registradoPor;
+    }
+
+    public void setRegistradoPor(Usuario registradoPor) {
+        this.registradoPor = registradoPor;
     }
 
     public LocalDate getFechaDespacho() {

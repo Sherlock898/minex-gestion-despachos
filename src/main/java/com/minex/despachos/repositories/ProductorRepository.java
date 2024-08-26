@@ -9,5 +9,6 @@ import com.minex.despachos.models.Productor;
 public interface ProductorRepository extends CrudRepository<Productor, Long> {
     Productor findByRut(String rut);
     Productor findByRazonSocial(String razonSocial);
+    boolean existsByRut(String rut);
     
 }

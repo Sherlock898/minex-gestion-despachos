@@ -155,7 +155,6 @@
 								<form class="d-inline p-0 m-0 border-0" method="POST" action="/choferes/${chofer.id}/cambiar-estado">
 									<button id="cambiar-estado-button" type="submit" class="btn btn-sm btn-outline-success">Cambiar estado</button>
 								</form>
-								<button type="button" class="btn btn-sm btn-outline-danger"  onclick="alert('No se permite eliminar entradas de la base de datos, contactar con un administrador.')">Eliminar</button>
 							</td>
 						</c:if>
 					</tr>

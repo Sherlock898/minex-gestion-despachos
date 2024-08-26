@@ -42,11 +42,9 @@ public class Despacho {
     @NotNull
     private Long precioNeto;
     @NotNull
-    private Long impuestoAdicional;
-
+    private Long precioTotal;
     @NotNull
-    @ManyToOne
-    private Productor productor;
+    private Long impuestoAdicional;
 
     @NotNull
     @ManyToOne
@@ -151,20 +149,20 @@ public class Despacho {
         this.precioNeto = precioNeto;
     }
 
+    public Long getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(Long precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
     public Long getImpuestoAdicional() {
         return impuestoAdicional;
     }
 
     public void setImpuestoAdicional(Long impuestoAdicional) {
         this.impuestoAdicional = impuestoAdicional;
-    }
-
-    public Productor getProductor() {
-        return productor;
-    }
-
-    public void setProductor(Productor productor) {
-        this.productor = productor;
     }
 
     public Cliente getCliente() {

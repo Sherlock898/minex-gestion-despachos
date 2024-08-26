@@ -76,6 +76,7 @@ public class DespachoController {
         if(usuario == null) return "redirect:/";
         if(usuario.getRol() != Usuario.Rol.ADMIN) return "redirect:/";
         if(result.hasErrors()){
+            System.out.println(result.getAllErrors());
             model.addAttribute("usuario", usuario);
             model.addAttribute("clientes", clienteService.getAll());
             model.addAttribute("productores", productorService.getAll());
@@ -114,7 +115,7 @@ public class DespachoController {
             model.addAttribute("choferes", choferService.getActivos());
             return "/Despachos/DespachosControl.jsp";
         }
-        
+        despachoCamion.setRegistradoPor(usuario);
         despachoCamionService.save(despachoCamion);
         return "redirect:/despachos/control";
     }

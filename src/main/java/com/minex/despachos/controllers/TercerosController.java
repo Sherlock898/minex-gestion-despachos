@@ -3,7 +3,6 @@ package com.minex.despachos.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 
 import com.minex.despachos.models.Camion;
 import com.minex.despachos.models.Chofer;
@@ -22,8 +21,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
@@ -94,7 +91,37 @@ public class TercerosController {
         return "redirect:/camiones";
     }
 
-    // TODO: edit and delete endpoints
+    @GetMapping("/camiones/{id}/edit")
+    public String editCamionForm(@PathVariable String id, HttpSession session, Model model) {
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        if(usuarioId == null) return "redirect:/login";
+        Usuario usuario = usuarioService.getById(usuarioId);
+        if(usuario == null) return "redirect:/login";
+        if(usuario.getRol() != Usuario.Rol.ADMIN) return "redirect:/";
+        Camion camion = camionService.getById(Long.parseLong(id));
+        if(camion == null) return "redirect:/camiones";
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("camion", camion);
+        return "/Terceros/CamionesEdit.jsp";
+    }
+
+    @PostMapping("/camiones/{id}/edit")
+    public String editCamion(@Valid @ModelAttribute("camion") Camion camion, BindingResult result, @PathVariable Long id, HttpSession session) {
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        if(usuarioId == null) return "redirect:/login";
+        Usuario usuario = usuarioService.getById(usuarioId);
+        if(usuario == null) return "redirect:/login";
+        if(result.hasErrors()) return "/Terceros/CamionesEdit.jsp";
+        Camion _camion = camionService.getById(id);
+        if(_camion == null) return "redirect:/camiones";
+        _camion.setPatente(camion.getPatente());
+        _camion.setModelo(camion.getModelo());
+        _camion.setColor(camion.getColor());
+        camionService.save(_camion);
+        return "redirect:/camiones";
+    }
+
+    // TODO: delete endpoints
 
     // Chofer endpoints, abiertos para todos
     @GetMapping("/choferes")
@@ -125,6 +152,9 @@ public class TercerosController {
         if(usuarioId == null) return "redirect:/login";
         Usuario usuario = usuarioService.getById(usuarioId);
         if(usuario == null) return "redirect:/login";
+        if(choferService.existsByRut(chofer.getRut())) {
+            result.rejectValue("rut", "error.chofer", "El rut ya está registrado");
+        }
         if(result.hasErrors()) return "/Terceros/ChoferesFormulario.jsp";
         choferService.save(chofer);
         return "redirect:/choferes";
@@ -143,8 +173,41 @@ public class TercerosController {
         choferService.save(chofer);
         return "redirect:/choferes";
     }
+
+    @GetMapping("/choferes/{id}/edit")
+    public String editChoferForm(@ModelAttribute("chofer") Chofer chofer, @PathVariable String id, HttpSession session, Model model) {
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        if(usuarioId == null) return "redirect:/login";
+        Usuario usuario = usuarioService.getById(usuarioId);
+        if(usuario == null) return "redirect:/login";
+        if(usuario.getRol() != Usuario.Rol.ADMIN) return "redirect:/";
+        Chofer _chofer = choferService.getById(Long.parseLong(id));
+        if(chofer == null) return "redirect:/choferes";
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("chofer", _chofer);
+        return "/Terceros/ChoferesEdit.jsp";
+    }
+
+    @PostMapping("/choferes/{id}/edit")
+    public String editChofer(@Valid @ModelAttribute Chofer chofer, BindingResult result, @PathVariable Long id, HttpSession session, Model model) {
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        if(usuarioId == null) return "redirect:/login";
+        Usuario usuario = usuarioService.getById(usuarioId);
+        if(usuario == null) return "redirect:/login";
+        Chofer _chofer = choferService.getById(id);
+        if(_chofer == null) return "redirect:/choferes";
+        System.out.println(result.getAllErrors());
+        if(result.hasErrors()){
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("chofer", chofer);
+            return "/Terceros/ChoferesEdit.jsp";
+        }
+        _chofer.setNombre(chofer.getNombre());
+        choferService.save(_chofer);
+        return "redirect:/choferes";
+    }
     
-    // TODO: edit and delete endpoints
+    // TODO: delete endpoints
 
     // Productor endpoints, post solo admins
     @GetMapping("/productores")
@@ -180,6 +243,47 @@ public class TercerosController {
         productorService.save(productor);
         return "redirect:/productores";
     }
+
+    @GetMapping("/productores/{id}/edit")
+    public String editProductorForm(@PathVariable("id") Long id, @ModelAttribute("productor") Productor productor, HttpSession session, Model model) {
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        if(usuarioId == null) return "redirect:/login";
+        Usuario usuario = usuarioService.getById(usuarioId);
+        if(usuario == null) return "redirect:/login";
+        if(usuario.getRol() != Usuario.Rol.ADMIN) return "redirect:/";
+        Productor _productor = productorService.getById(id);
+        if(_productor == null) return "redirect:/productores";
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("productor", _productor);
+        return "/Terceros/ProductoresEdit.jsp";
+    }
+
+    @PostMapping("/productores/{id}/edit")
+    public String editProductor(@PathVariable("id") Long id, @Valid @ModelAttribute Productor productor, BindingResult result, HttpSession session, Model model) {
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        System.out.println(productor.getId());
+        if(usuarioId == null) return "redirect:/login";
+        Usuario usuario = usuarioService.getById(usuarioId);
+        if(usuario == null) return "redirect:/login";
+        Productor _productor = productorService.getById(id);
+        if(_productor == null) return "redirect:/productores";
+        if(result.hasErrors()){
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("productor", productor);
+            System.out.println(result.getAllErrors());
+            return "/Terceros/ProductoresEdit.jsp";
+        }
+        _productor.setRut(productor.getRut());
+        _productor.setRazonSocial(productor.getRazonSocial());
+        _productor.setComunaActual(productor.getComunaActual());
+        _productor.setCiudadActual(productor.getCiudadActual());
+        _productor.setDireccionActual(productor.getDireccionActual());
+        _productor.setEmail(productor.getEmail());
+        _productor.setTelefono(productor.getTelefono());
+        productorService.save(_productor);
+        return "redirect:/productores";
+    }
+    
 
     // TODO: edit and delete endpoints
 

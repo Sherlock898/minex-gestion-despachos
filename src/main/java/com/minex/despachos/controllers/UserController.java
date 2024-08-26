@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 //TODO: Anyadir interceptor para verificar que el usuario esté logeado
 @Controller
-@Validated
 public class UserController {
     private final UsuarioService usuarioService;
 
@@ -72,7 +71,7 @@ public class UserController {
     @GetMapping("/registro")
     public String mostrarRegistro(@ModelAttribute("usuario") Usuario _u, HttpSession session) {
         Long usuarioId = (Long) session.getAttribute("usuarioId");
-        if (usuarioId != null) {
+        if (usuarioId == null) {
             return "redirect:/";
         }
         Usuario usuario = usuarioService.getById(usuarioId);
@@ -81,22 +80,17 @@ public class UserController {
         } else if (usuario.getRol() != Usuario.Rol.ADMIN) {
             return "redirect:/";
         }
+
         return "/Usuario/Registro.jsp";
     }
 
     @PostMapping("/registro")
-    public String registrarUsuario(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult result, Model model,
-            HttpSession session) {
+    public String registrarUsuario(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult result, Model model, HttpSession session) {     
         Long usuarioId = (Long) session.getAttribute("usuarioId");
-        if (usuarioId != null) {
-            return "redirect:/";
-        }
+        if (usuarioId == null) return "redirect:/";
         Usuario usuarioSesion = usuarioService.getById(usuarioId);
-        if (usuarioSesion == null) {
-            return "redirect:/";
-        } else if (usuarioSesion.getRol() != Usuario.Rol.ADMIN) {
-            return "redirect:/";
-        }
+        if (usuarioSesion == null) return "redirect:/";
+        if (usuarioSesion.getRol() != Usuario.Rol.ADMIN) return "redirect:/";
         Usuario emailRegistrado = usuarioService.getByEmail(usuario.getEmail());
         if (emailRegistrado != null) {
             result.rejectValue("email", "unique", "Este email ya está registrado");
@@ -105,11 +99,8 @@ public class UserController {
         if (rutRegistrado != null) {
             result.rejectValue("rut", "unique", "Este rut ya está registrado");
         }
-        if (!usuario.getPassword().equals(usuario.getPasswordConfirm())) {
-            result.rejectValue("passwordConfirm", "match", "Las contraseñas no coinciden");
-        }
-
         if (result.hasErrors()) {
+            System.out.println(result.getAllErrors());
             return "/Usuario/Registro.jsp";
         }
         Usuario usuarioRegistradoExitoso = usuarioService.registrar(usuario);
@@ -118,7 +109,7 @@ public class UserController {
             return "/Usuario/Registro.jsp";
         }
         usuarioService.registrar(usuario);
-        return "/Usuario/Registro.jsp";
+        return "redirect:/admin";
     }
 
     @GetMapping("/logout")
@@ -129,7 +120,7 @@ public class UserController {
 
     // Admin page
     @GetMapping("/admin")
-    public String adminPage(HttpSession session) {
+    public String adminPage(HttpSession session, Model model) {
         Long usuarioId = (Long) session.getAttribute("usuarioId");
         if (usuarioId == null) {
             return "redirect:/login";
@@ -141,7 +132,10 @@ public class UserController {
         if (usuario.getRol() != Usuario.Rol.ADMIN) {
             return "redirect:/";
         }
+        model.addAttribute("usuarios", usuarioService.getAll());
+        model.addAttribute("usuario", usuario);
         return "/Usuario/Admin.jsp";
     }
+
 
 }

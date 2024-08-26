@@ -1,5 +1,7 @@
 package com.minex.despachos.services;
 
+import java.util.List;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +51,9 @@ public class UsuarioService {
 
     public Usuario getById(Long usuarioId) {
         return usuarioRepository.findById(usuarioId).orElse(null);
+    }
+
+    public List<Usuario> getAll() {
+        return (List<Usuario>) usuarioRepository.findAll();
     }
 }

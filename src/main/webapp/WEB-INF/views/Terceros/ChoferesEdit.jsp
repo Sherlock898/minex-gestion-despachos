@@ -7,12 +7,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar despacho</title>
+    <title>Editar chofer</title>
     <!-- Boostrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<!-- Estilos sydebar -->
 	<link rel="stylesheet" href="/css/sidebars.css">
-
 </head>
 <body>
 	<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -53,9 +52,7 @@
 	<!-- Sidebar  -->
     <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-bg-dark col-md-3 col-lg-2 vh-100" >
 		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-			<svg class="bi pe-none me-2" width="40" height="32">
-				<use xlink:href="#bootstrap"></use>
-			</svg>
+			<img src="/favicon.ico" class="bi pe-none me-2" width="40" height="32"/>
 			<span class="fs-4">Minex</span>
 		</a>
 		<hr>
@@ -69,7 +66,7 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="/despachos" class="nav-link text-white d-flex align-items-center active" aria-current="page">
+				<a href="/despachos" class="nav-link text-white d-flex align-items-center">
 					<svg class="bi pe-none me-2" width="16" height="16">
 						<use xlink:href="#table"></use>
 					</svg>
@@ -85,7 +82,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/choferes" class="nav-link text-white d-flex align-items-center">
+				<a href="/choferes" class="nav-link text-white d-flex align-items-center active" aria-current="page">
 					<svg class="pe-none me-2" width="16" height="16" stroke="#ffffff" fill="none">
 						<use xlink:href="#driver"></use>
 					</svg>
@@ -118,131 +115,22 @@
 	
 	<main class="col-md-9 ms-sm-auto col-lg-10 align-items-center">
 		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-			<h1 class="h2 mb-3">Añadir despacho</h1>
+			<h1 class="h2 mb-3">Editando chofer RUT: ${chofer.rut}</h1>
 
 		</div>
 
 		<div class="d-flex justify-content-center align-items-center">
-			<form:form class="col-lg-9 col-sm-12 col-md-12 center-block" method="POST" action="/despachos/add" modelAttribute="despacho">
-				<div class="row">
-					<div class="col-2">
-						<div class="form-floating mb-3">
-							<form:input type="number" path="numero" class="form-control" id="numero" name="numero" placeholder="numero"/>
-							<form:label path="numero" for="numero">Número</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="numero"/>
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-floating mb-3">
-							<form:input path="descripcionProducto" class="form-control" id="descripcionProducto" name="descripcionProducto" placeholder="descripcionProducto"/>
-							<form:label path="descripcionProducto" for="descripcionProducto">Descripción</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="descripcionProducto"/>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-floating mb-3">
-							<form:select path="cliente" class="form-control" id="cliente" name="cliente" placeholder="cliente">
-								<form:option value="" label="Seleccione"/>
-								<c:forEach var="cliente" items="${clientes}">
-									<form:option value="${cliente.id}" label="${cliente.razonSocial}"/>
-								</c:forEach>
-							</form:select>
-							<form:label path="cliente" for="cliente">Cliente</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="cliente"/>
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-floating mb-3">
-							<form:select path="productor" class="form-control" id="productor" name="productor" placeholder="productor">
-								<form:option value="" label="Seleccione"/>
-								<c:forEach var="productor" items="${productores}">
-									<form:option value="${productor.id}" label="${productor.razonSocial}"/>
-								</c:forEach>
-							</form:select>
-							<form:label path="productor" for="productor">Productor</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="productor"/>
-						</div>
-					</div>
-				</div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-floating mb-3">
-                            <form:input path="ciudad" class="form-control" id="ciudad" name="ciudad" placeholder="ciudad"/>
-                            <form:label path="ciudad" for="ciudad">Ciudad</form:label>
-                            <form:errors class="text text-danger fw-bold m-2" path="ciudad"/>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-floating mb-3">
-                            <form:input path="comuna" class="form-control" id="comuna" name="comuna" placeholder="comuna"/>
-                            <form:label path="comuna" for="comuna">Comuna</form:label>
-                            <form:errors class="text text-danger fw-bold m-2" path="comuna"/>
-                        </div>
-                    </div>
-					<div class="col">
-						<div class="form-floating mb-3">
-							<form:input path="direccion" class="form-control" id="floatingInput" name="direccion" placeholder="direccion"/>
-							<form:label path="direccion" for="floatingInput">Dirección</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="direccion"/>
-						</div>
-					</div>
-                </div>
+			<form:form class="col-lg-9 col-sm-12 col-md-12 center-block" method="POST" action="/choferes/${chofer.id}/edit" modelAttribute="chofer">
+				<form:input path="id" type="hidden"/>
+				<form:input path="rut" type="hidden"/>
 
-
-	
-				<div class="row">
-					<div class="col">
-						<div class="form-floating mb-3">
-							<form:input path="cantidad" type="number" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad"/>
-							<form:label path="cantidad" for="cantidad">Cantidad</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="cantidad"/>
-						</div>
-					</div>
-					<div class="col-3">
-						<div class="col form-floating">
-							
-							<form:select path="unidadDeMedida" class="form-control" id="unidadMedida" name="unidadMedida" placeholder="hd">
-								<form:option value="" label="Seleccione"/>
-								<c:forEach var="unidad" items="${unidades}">
-									<form:option value="${unidad}" label="${unidad}"/>
-								</c:forEach>
-							</form:select>
-							<form:label path="unidadDeMedida" for="unidadMedida">Unidad</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="unidadDeMedida"/>
-						</div>
-					</div>
+				<div class="form-floating mb-3">
+					<form:input path="nombre" class="form-control" id="nombre" name="nombre" placeholder="nombre"/>
+					<form:label path="nombre" for="nombre">Nombre</form:label>
+					<form:errors class="text text-danger fw-bold m-2" path="nombre"/>
 				</div>
 
-				<div class="row">
-					<div class="col">
-						<div class="form-floating mb-3">
-							<form:input type="number" path="precioUnitario" id="precioUnitario" class="form-control" name="precioUnitario" placeholder="precioUnitario"/>
-							<form:label path="precioUnitario" for="precioUnitario">Precio unitario</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="precioUnitario"/>
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-floating mb-3">
-							<form:input type="number" path="precioNeto" id="precioNeto" class="form-control" name="precioNeto" placeholder="precioNeto"/>
-							<form:label path="precioNeto" for="precioNeto">Precio total</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="precioNeto"/>
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-floating mb-3">
-							<form:input type="number" path="impuestoAdicional" id="impuestoAdicional" class="form-control" name="impuestoAdicional" placeholder="impuestoAdicional"/>
-							<form:label path="impuestoAdicional" for="impuestoAdicional">Impuesto adicional</form:label>
-							<form:errors class="text text-danger fw-bold m-2" path="impuestoAdicional"/>
-						</div>
-					</div>
-				</div>
-
-
-
-
-				<button class="w-100 btn btn-outline-primary btn-lg" type="submit">Añadir</button>
+				<button class="w-100 btn btn-outline-primary btn-lg" type="submit">Editar</button>
 
 			</form:form>
 		</div>

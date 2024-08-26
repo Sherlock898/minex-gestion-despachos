@@ -17,7 +17,7 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 public class Despacho {
     public enum UnidadDeMedida {
-        M3, CM3, TON
+        M3, CM3, TON, KG
     }
 
     @Id

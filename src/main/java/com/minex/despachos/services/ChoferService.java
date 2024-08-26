@@ -19,7 +19,7 @@ public class ChoferService {
         return choferRepository.save(chofer);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Long id) {   
         choferRepository.deleteById(id);
     }
 
@@ -33,5 +33,9 @@ public class ChoferService {
 
     public List<Chofer> getActivos() {
         return choferRepository.findByActivoTrue();
+    }
+
+    public boolean existsByRut(String rut) {
+        return choferRepository.existsByRut(rut);
     }
 }

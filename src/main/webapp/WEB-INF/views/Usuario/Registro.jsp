@@ -16,23 +16,41 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <h1>Registro</h1>
-                <form:form action="${pageContext.request.contextPath}/usuario/registro" method="post" modelAttribute="usuario">
+                <form:form action="/registro" method="post" modelAttribute="usuario">
+                    <div class="form-group">
+                        <form:label path="rut" for="rut">Rut</form:label>
+                        <form:input path="rut" class="form-control" id="rut" name="rut"/>
+                        <small class="text-muted">Ejemplo: 12345678-9</small>
+                        <form:errors path="rut" cssClass="text-danger" />
+                    </div>
                     <div class="form-group">
                         <form:label path="nombre">Nombre</form:label>
                         <form:input path="nombre" class="form-control" />
+                        <form:errors path="nombre" cssClass="text-danger" />
                     </div>
                     <div class="form-group form-group">
                         <form:label path="email">Email</form:label>
                         <form:input path="email" class="form-control" />
+                        <form:errors path="email" cssClass="text-danger" />
                     </div>
                     <div class="form-group form-group">
                         <form:label path="password">Contraseña</form:label>
-                        <form:input path="password" class="form-control" />
+                        <form:input path="password" type="password" class="form-control" />
+                        <form:errors path="password" cssClass="text-danger" />
+                    </div>
+                    <div class="form-group form-group">
+                        <form:label path="rol" for="rol">Rol</form:label>
+                        <form:select path="rol" class="form-control">
+                            <form:option value="ADMIN">Administrador</form:option>
+                            <form:option value="USUARIO">Usuario</form:option>
+                        </form:select>
                     </div>
                     <button type="submit" class="btn btn-primary">Registrar</button>
                 </form:form>
             </div>
         </div>
     </div>
+
+    <script src="/js/rutFormat.js"></script>
 </body>
 </html>

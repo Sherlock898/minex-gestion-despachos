@@ -10,5 +10,7 @@ import com.minex.despachos.models.Chofer;
 @Repository
 public interface ChoferRepository extends CrudRepository<Chofer, Long> {
     List<Chofer> findByActivoTrue();
+
+    boolean existsByRut(String rut);
     
 }

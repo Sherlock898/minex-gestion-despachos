@@ -7,3 +7,6 @@ services:
       - 'POSTGRES_USER=admin'
     ports:
       - '5432:5432'
+
+  dispatchs:
+    

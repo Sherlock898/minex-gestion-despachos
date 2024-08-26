@@ -52,9 +52,7 @@
 	<!-- Sidebar  -->
     <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-bg-dark col-md-3 col-lg-2 vh-100" >
 		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-			<svg class="bi pe-none me-2" width="40" height="32">
-				<use xlink:href="#bootstrap"></use>
-			</svg>
+			<img src="/favicon.ico" class="bi pe-none me-2" width="40" height="32"/>
 			<span class="fs-4">Minex</span>
 		</a>
 		<hr>
@@ -160,6 +158,22 @@
                     <form:errors class="text text-danger fw-bold m-2" path="direccionActual"/>
                 </div>
 
+				<div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <form:input path="email" class="form-control" id="email" name="email" type="email" placeholder="email"/>
+                            <form:label path="email" for="email">Email</form:label>
+                            <form:errors class="text text-danger fw-bold m-2" path="email"/>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3 col">
+                            <form:input path="telefono" class="form-control" id="telefono" name="telefono" type="number" placeholder="telefono"/>
+                            <form:label path="telefono" for="telefono">Teléfono</form:label>
+                            <form:errors class="text text-danger fw-bold m-2" path="telefono"/>
+                        </div>
+                    </div>
+                </div>
 
 				<button class="w-100 btn btn-outline-primary btn-lg" type="submit">Añadir</button>
 
@@ -172,6 +186,5 @@
 
 <!-- Boostrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="/js/dataTableConfig.js"></script>
 <script src="/js/rutFormat.js"></script>
 </html>

@@ -52,9 +52,7 @@
 	<!-- Sidebar  -->
     <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-bg-dark col-md-3 col-lg-2 vh-100" >
 		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-			<svg class="bi pe-none me-2" width="40" height="32">
-				<use xlink:href="#bootstrap"></use>
-			</svg>
+			<img src="/favicon.ico" class="bi pe-none me-2" width="40" height="32"/>
 			<span class="fs-4">Minex</span>
 		</a>
 		<hr>
@@ -124,22 +122,22 @@
 		<div class="d-flex justify-content-center align-items-center">
 			<form:form class="col-lg-9 col-sm-12 col-md-12 center-block" method="POST" action="/camiones/add" modelAttribute="camion">
 				<div class="form-floating mb-3">
-					<form:input path="patente" class="form-control" id="floatingInput" name="patente" placeholder="patente" required="true"/>
-					<form:label path="patente" for="floatingInput">Patente</form:label>
+					<form:input path="patente" class="form-control" id="patente" name="patente" placeholder="patente" maxlength="6" required="true"/>
+					<form:label path="patente" for="patente">Patente</form:label>
 				<form:errors class="text text-danger fw-bold m-2" path="patente"/>
 
 				</div>
 				
 
 				<div class="form-floating mb-3">
-					<form:input path="color" class="form-control" id="floatingInput" name="color" placeholder="color"/>
-					<form:label path="color" for="floatingInput">Color</form:label>
+					<form:input path="color" class="form-control" id="color" name="color" placeholder="color"/>
+					<form:label path="color" for="color">Color</form:label>
 					<form:errors class="text text-danger fw-bold m-2" path="color"/>
 				</div>
 
 				<div class="form-floating mb-3">
-					<form:input path="modelo" class="form-control" id="floatingInput" name="modelo" placeholder="modelo"/>
-					<form:label path="modelo" for="floatingInput">Modelo</form:label>
+					<form:input path="modelo" class="form-control" id="modelo" name="modelo" placeholder="modelo"/>
+					<form:label path="modelo" for="modelo">Modelo</form:label>
 					<form:errors class="text text-danger fw-bold m-2" path="modelo"/>
 				</div>
 

@@ -113,7 +113,7 @@
 
 
         <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Log in</button>
-        <p class="mt-4 mb-3 text-body-secondary text-center">¿Necesitas ayuda? <a href="#">Conctactar Soporte</a></p>
+        <p class="mt-4 mb-3 text-body-secondary text-center">¿Necesitas ayuda? Contacta al administrador</p>
     </form>
     </main>
 

@@ -57,9 +57,7 @@
 	<!-- Sidebar  -->
     <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-bg-dark col-md-3 col-lg-2 vh-100" >
 		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-			<svg class="bi pe-none me-2" width="40" height="32">
-				<use xlink:href="#bootstrap"></use>
-			</svg>
+			<img src="/favicon.ico" class="bi pe-none me-2" width="40" height="32"/>
 			<span class="fs-4">Minex</span>
 		</a>
 		<hr>
@@ -138,7 +136,7 @@
 			</div>	
 		</div>
 	<div class="table-responsive small">
-		<table id="despachosData" class="table table-striped table-sm">
+		<table id="despachosData" class="table table-striped table-sm text-center">
 			<thead>
 				<tr>
 					<th>Id</th>
@@ -173,7 +171,7 @@
 						<td>${despacho.despachoCamion.chofer.rut}</td>
 						<td>${despacho.despachoCamion.camion.patente}</td>
                         <td>${despacho.despachoCamion.fechaDespacho}</td>
-						<td>${despacho.despachoCamion.recibido}</td>                        
+						<td>${despacho.despachoCamion.recibido ? "Si" : "No"}</td>                        
 					</tr>
 				</c:forEach>
 			</tbody>

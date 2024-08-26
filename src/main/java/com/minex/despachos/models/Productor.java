@@ -12,13 +12,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class Productor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @Pattern(regexp = "^[0-9]{7,8}-[0-9Kk]$", message = "Rut inválido")
     private String rut;
     @NotBlank
     private String razonSocial;
@@ -28,6 +29,10 @@ public class Productor {
     private String comunaActual;
     @NotBlank
     private String ciudadActual;
+    @NotBlank
+    private String telefono;
+    @NotBlank
+    private String email;
 
     @OneToMany(mappedBy = "productor")
     private List<Despacho> despachos;
@@ -102,6 +107,22 @@ public class Productor {
 
     public void setCiudadActual(String ciudadActual) {
         this.ciudadActual = ciudadActual;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Date getCreatedAt() {

@@ -117,7 +117,7 @@
 	
 	<main class="col-md-9 ms-sm-auto col-lg-10 align-items-center">
 		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-			<h1 class="h2 mb-3">Añadir nuevo productor</h1>
+			<h1 class="h2 mb-3">Control</h1>
 
 		</div>
 
@@ -130,7 +130,7 @@
                                 <option value="${despacho.id}">${despacho.numero}</option>
                             </c:forEach>
                         </form:select>
-                        <form:label path="despacho" for="despacho">Despacho</form:label>
+                        <form:label path="despacho" for="despacho">Número guía de despacho</form:label>
                         <form:errors class="text text-danger fw-bold m-2" path="despacho"/>
                     </div>
                     <div class="form-floating mb-3">
@@ -139,26 +139,33 @@
                                 <option value="${camion.id}">${camion.patente}</option>
                             </c:forEach>
                         </form:select>
-                        <form:label path="camion" for="camion">Camión</form:label>
+                        <form:label path="camion" for="camion">Patente camión</form:label>
                         <form:errors class="text text-danger fw-bold m-2" path="camion"/>
                     </div>
                     <div class="form-floating mb-3">
                         <form:select path="chofer" class="form-select" id="chofer" name="chofer">
                             <c:forEach var="chofer" items="${choferes}">
                                 <option value="${chofer.id}">${chofer.rut}</option>
-                            </c:forEach>
+                            	</c:forEach>
                         </form:select>
-                        <form:label path="chofer" for="chofer">Chofer</form:label>
+                        <form:label path="chofer" for="chofer">Rut chofer</form:label>
                         <form:errors class="text text-danger fw-bold m-2" path="camion"/>
                     </div>  
                     <div class="form-floating mb-3">
                         <form:input path="fechaDespacho" class="form-control" id="fechaDespacho" name="fechaDespacho" type="date" required="required"/>
-                        <label for="fechaDespacho">Fecha</label>
+                        <form:label path="fechaDespacho" for="fechaDespacho">Fecha</form:label>
                         <form:errors class="text text-danger fw-bold m-2" path="fechaDespacho"/>
                     </div>
+					<div class="form-check mb-3">
+						<form:checkbox path="recibido" id="recibido" class="form-check-input" required="required" checked="checked"/>
+						<form:label path="recibido" for="recibido" class="form-check-label">Recibido</form:label>
+						<form:errors class="text text-danger fw-bold m-2" path="recibido"/>
+					</div>
+
                     <button class="w-100 btn btn-outline-primary btn-lg" type="submit">Añadir</button>
                 </form:form>    
 		    </div>
+
             <h1 class="h2 mt-3 mb-3">Subir Archivo Excel</h1>
 
             <div class="d-flex justify-content-center align-items-center mt-4">
